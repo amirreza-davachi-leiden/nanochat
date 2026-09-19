@@ -1,0 +1,9 @@
+{
+  "english_everyday": "The library opens at nine in the morning. Maya returned her books, borrowed a novel, and walked home through the park. It had rained overnight, but the afternoon was warm and clear.",
+  "english_science": "Plants use light to convert water and carbon dioxide into chemical energy. A scientific explanation should distinguish observations from assumptions and describe how its predictions can be tested.",
+  "numbers": "0 7 42 123 1234 1234567890 3.1415926535 -0.005 1,000,000 6.02e23 2026-09-19 08:45",
+  "python_code": "def mean(values):\n    if not values:\n        return None\n    return sum(values) / len(values)\n\nprint(mean([1.5, 2.0, 3.5]))\n",
+  "dutch": "De student vergelijkt twee tokenizers. Hoe worden samengestelde woorden, getallen en leestekens opgesplitst? Morgen bespreken we de resultaten in de bibliotheek.",
+  "chinese": "学生正在比较两种分词器。相同的文本在不同词表大小下会产生多少个词元？",
+  "unicode": "café naïve coöperatie — café café 🌍 👩🏽‍💻"
+}

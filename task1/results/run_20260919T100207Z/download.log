@@ -1,0 +1,6 @@
+Downloading https://huggingface.co/datasets/karpathy/climbmix-400b-shuffle/resolve/915333b4f8b8684f39aeaafea600fea6f43fb703/shard_00000.parquet
+Saved shard_00000.parquet: 92,291,918 bytes
+Downloading https://huggingface.co/datasets/karpathy/climbmix-400b-shuffle/resolve/915333b4f8b8684f39aeaafea600fea6f43fb703/shard_00001.parquet
+Saved shard_00001.parquet: 92,124,317 bytes
+Downloading https://huggingface.co/datasets/karpathy/climbmix-400b-shuffle/resolve/915333b4f8b8684f39aeaafea600fea6f43fb703/shard_00002.parquet
+Saved shard_00002.parquet: 91,803,619 bytes

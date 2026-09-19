@@ -1,0 +1,6 @@
+Training vocabulary 8,192 on the recorded sample...
+Saved tokenizer encoding to /home/s4784863/agentic_assignment1/task1/tokenizer_8192/tokenizer.pkl
+Saved /home/s4784863/agentic_assignment1/task1/tokenizer_8192; training took 6.93s
+Training vocabulary 32,768 on the recorded sample...
+Saved tokenizer encoding to /home/s4784863/agentic_assignment1/task1/tokenizer_32768/tokenizer.pkl
+Saved /home/s4784863/agentic_assignment1/task1/tokenizer_32768; training took 7.40s
