@@ -1,0 +1,7 @@
+# Direct tokenizer dependencies, matching ../nanochat/uv.lock.
+# Read the dataset's Parquet shards without loading every column into memory.
+pyarrow==21.0.0
+# Learn BPE merges using the Rust trainer wrapped by nanochat.
+rustbpe==0.1.0
+# Encode/decode text with the vocabulary learned by rustbpe.
+tiktoken==0.11.0

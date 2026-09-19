@@ -1,0 +1,93 @@
+{
+  "status": "complete",
+  "started_utc": "2026-09-19T10:02:07.948201+00:00",
+  "working_directory": "/home/s4784863/agentic_assignment1",
+  "dataset_revision": "915333b4f8b8684f39aeaafea600fea6f43fb703",
+  "vocabulary_sizes": [
+    8192,
+    32768
+  ],
+  "requested_training_text_bytes": 500000000,
+  "evaluation_examples": "task1/eval_samples.json",
+  "script_sha256": "c32ffaa470ed530f7a66317bde0446dfe2e1b4de725c024646155b17f19e896b",
+  "evaluation_examples_sha256": "65b91f1f04a1d6d21a59cec51e04574d9e772a16b3c0aacbad93dcf81401b78f",
+  "environment": {
+    "RAYON_NUM_THREADS": "8",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "stages": [
+    {
+      "name": "download",
+      "command": [
+        "/home/s4784863/agentic_assignment1/task1/.venv/bin/python",
+        "-u",
+        "-B",
+        "/home/s4784863/agentic_assignment1/task1/task1_tokenizers.py",
+        "download",
+        "--num-shards",
+        "3",
+        "--revision",
+        "915333b4f8b8684f39aeaafea600fea6f43fb703"
+      ],
+      "shell_command": "/home/s4784863/agentic_assignment1/task1/.venv/bin/python -u -B /home/s4784863/agentic_assignment1/task1/task1_tokenizers.py download --num-shards 3 --revision 915333b4f8b8684f39aeaafea600fea6f43fb703",
+      "started_utc": "2026-09-19T10:02:07.948334+00:00",
+      "log": "task1/results/run_20260919T100207Z/download.log",
+      "status": "complete",
+      "completed_utc": "2026-09-19T10:02:13.774298+00:00",
+      "elapsed_seconds": 5.737504813005216,
+      "exit_code": 0
+    },
+    {
+      "name": "prepare",
+      "command": [
+        "/home/s4784863/agentic_assignment1/task1/.venv/bin/python",
+        "-u",
+        "-B",
+        "/home/s4784863/agentic_assignment1/task1/task1_tokenizers.py",
+        "prepare"
+      ],
+      "shell_command": "/home/s4784863/agentic_assignment1/task1/.venv/bin/python -u -B /home/s4784863/agentic_assignment1/task1/task1_tokenizers.py prepare",
+      "started_utc": "2026-09-19T10:02:13.861713+00:00",
+      "log": "task1/results/run_20260919T100207Z/prepare.log",
+      "status": "complete",
+      "completed_utc": "2026-09-19T10:02:18.310722+00:00",
+      "elapsed_seconds": 4.307518871035427,
+      "exit_code": 0
+    },
+    {
+      "name": "train",
+      "command": [
+        "/home/s4784863/agentic_assignment1/task1/.venv/bin/python",
+        "-u",
+        "-B",
+        "/home/s4784863/agentic_assignment1/task1/task1_tokenizers.py",
+        "train"
+      ],
+      "shell_command": "/home/s4784863/agentic_assignment1/task1/.venv/bin/python -u -B /home/s4784863/agentic_assignment1/task1/task1_tokenizers.py train",
+      "started_utc": "2026-09-19T10:02:18.380057+00:00",
+      "log": "task1/results/run_20260919T100207Z/train.log",
+      "status": "complete",
+      "completed_utc": "2026-09-19T10:02:33.223665+00:00",
+      "elapsed_seconds": 14.712270183954388,
+      "exit_code": 0
+    },
+    {
+      "name": "evaluate",
+      "command": [
+        "/home/s4784863/agentic_assignment1/task1/.venv/bin/python",
+        "-u",
+        "-B",
+        "/home/s4784863/agentic_assignment1/task1/task1_tokenizers.py",
+        "evaluate"
+      ],
+      "shell_command": "/home/s4784863/agentic_assignment1/task1/.venv/bin/python -u -B /home/s4784863/agentic_assignment1/task1/task1_tokenizers.py evaluate",
+      "started_utc": "2026-09-19T10:02:33.310074+00:00",
+      "log": "task1/results/run_20260919T100207Z/evaluate.log",
+      "status": "complete",
+      "completed_utc": "2026-09-19T10:02:33.557614+00:00",
+      "elapsed_seconds": 0.11452025605831295,
+      "exit_code": 0
+    }
+  ],
+  "completed_utc": "2026-09-19T10:02:33.643685+00:00"
+}

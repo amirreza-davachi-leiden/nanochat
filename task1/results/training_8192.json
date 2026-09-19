@@ -1,0 +1,52 @@
+{
+  "vocab_size": 8192,
+  "special_tokens": 9,
+  "training_seconds": 6.933944668970071,
+  "sample": {
+    "requested_text_bytes": 500000000,
+    "text_bytes": 500000000,
+    "characters": 499265595,
+    "documents": 189827,
+    "doc_cap_characters": 10000,
+    "sample_sha256": "510879be699550caa8eab8a800ab5d4616941364a5fe66ba8a65e43ebb6a47cc",
+    "sources": [
+      {
+        "filename": "shard_00000.parquet",
+        "sha256": "054ddbd98abf30d773c54de578fc9d579bafeb6c14e04e97bd36aa90e825bf9b",
+        "download": {
+          "url": "https://huggingface.co/datasets/karpathy/climbmix-400b-shuffle/resolve/915333b4f8b8684f39aeaafea600fea6f43fb703/shard_00000.parquet",
+          "sha256": "054ddbd98abf30d773c54de578fc9d579bafeb6c14e04e97bd36aa90e825bf9b",
+          "bytes": 92291918
+        }
+      },
+      {
+        "filename": "shard_00001.parquet",
+        "sha256": "d4cfe1de19f4fd976022a9047458655968bc5583582ec5fa714801ec2be2c93c",
+        "download": {
+          "url": "https://huggingface.co/datasets/karpathy/climbmix-400b-shuffle/resolve/915333b4f8b8684f39aeaafea600fea6f43fb703/shard_00001.parquet",
+          "sha256": "d4cfe1de19f4fd976022a9047458655968bc5583582ec5fa714801ec2be2c93c",
+          "bytes": 92124317
+        }
+      },
+      {
+        "filename": "shard_00002.parquet",
+        "sha256": "5e80d7596d53be648d841ea5811082747281c39f6851e10dd90375a84bc509a7",
+        "download": {
+          "url": "https://huggingface.co/datasets/karpathy/climbmix-400b-shuffle/resolve/915333b4f8b8684f39aeaafea600fea6f43fb703/shard_00002.parquet",
+          "sha256": "5e80d7596d53be648d841ea5811082747281c39f6851e10dd90375a84bc509a7",
+          "bytes": 91803619
+        }
+      }
+    ],
+    "sampling": "Sorted training shards, row order, capped documents, UTF-8-safe final prefix.",
+    "byte_definition": "UTF-8 bytes of text fields only; 1 MB = 1,000,000 bytes."
+  },
+  "nanochat_revision": "92d63d4e8bb4df75c3b71618f31ddde2378b2bcd",
+  "tokenizer_source_sha256": "e6f12cb88fead3e6d0d45a7dd2af4192280712d92bfde83e2399cc4b3a0860fb",
+  "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+  "packages": {
+    "rustbpe": "0.1.0",
+    "tiktoken": "0.11.0",
+    "pyarrow": "21.0.0"
+  }
+}

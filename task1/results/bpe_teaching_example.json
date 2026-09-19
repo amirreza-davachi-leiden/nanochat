@@ -1,0 +1,283 @@
+{
+  "purpose": "New synthetic teaching example constructed for this discussion; separate from CLIMBMix training.",
+  "corpus_word_frequencies": {
+    "zab": 4,
+    "zac": 2,
+    "zut": 1
+  },
+  "conventions": [
+    "Each word is a separate document; do not count pairs across word boundaries.",
+    "ASCII characters are the starting symbols, each corresponding to one UTF-8 byte.",
+    "Count adjacent pairs across all word occurrences, then merge the most frequent pair.",
+    "Recount pairs after every merge; break any frequency tie lexicographically.",
+    "Stop after three merges for illustration; this is not a full tokenizer vocabulary.",
+    "These are toy-corpus frequencies, not learned-merge frequencies from either trained tokenizer."
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "corpus_tokens_before": {
+        "zab": [
+          "z",
+          "a",
+          "b"
+        ],
+        "zac": [
+          "z",
+          "a",
+          "c"
+        ],
+        "zut": [
+          "z",
+          "u",
+          "t"
+        ]
+      },
+      "pair_frequencies_before_merge": [
+        {
+          "pair": [
+            "z",
+            "a"
+          ],
+          "frequency": 6
+        },
+        {
+          "pair": [
+            "a",
+            "b"
+          ],
+          "frequency": 4
+        },
+        {
+          "pair": [
+            "a",
+            "c"
+          ],
+          "frequency": 2
+        },
+        {
+          "pair": [
+            "u",
+            "t"
+          ],
+          "frequency": 1
+        },
+        {
+          "pair": [
+            "z",
+            "u"
+          ],
+          "frequency": 1
+        }
+      ],
+      "selected_pair": [
+        "z",
+        "a"
+      ],
+      "selected_frequency": 6,
+      "new_token": "za",
+      "corpus_tokens_after": {
+        "zab": [
+          "za",
+          "b"
+        ],
+        "zac": [
+          "za",
+          "c"
+        ],
+        "zut": [
+          "z",
+          "u",
+          "t"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "corpus_tokens_before": {
+        "zab": [
+          "za",
+          "b"
+        ],
+        "zac": [
+          "za",
+          "c"
+        ],
+        "zut": [
+          "z",
+          "u",
+          "t"
+        ]
+      },
+      "pair_frequencies_before_merge": [
+        {
+          "pair": [
+            "za",
+            "b"
+          ],
+          "frequency": 4
+        },
+        {
+          "pair": [
+            "za",
+            "c"
+          ],
+          "frequency": 2
+        },
+        {
+          "pair": [
+            "u",
+            "t"
+          ],
+          "frequency": 1
+        },
+        {
+          "pair": [
+            "z",
+            "u"
+          ],
+          "frequency": 1
+        }
+      ],
+      "selected_pair": [
+        "za",
+        "b"
+      ],
+      "selected_frequency": 4,
+      "new_token": "zab",
+      "corpus_tokens_after": {
+        "zab": [
+          "zab"
+        ],
+        "zac": [
+          "za",
+          "c"
+        ],
+        "zut": [
+          "z",
+          "u",
+          "t"
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "corpus_tokens_before": {
+        "zab": [
+          "zab"
+        ],
+        "zac": [
+          "za",
+          "c"
+        ],
+        "zut": [
+          "z",
+          "u",
+          "t"
+        ]
+      },
+      "pair_frequencies_before_merge": [
+        {
+          "pair": [
+            "za",
+            "c"
+          ],
+          "frequency": 2
+        },
+        {
+          "pair": [
+            "u",
+            "t"
+          ],
+          "frequency": 1
+        },
+        {
+          "pair": [
+            "z",
+            "u"
+          ],
+          "frequency": 1
+        }
+      ],
+      "selected_pair": [
+        "za",
+        "c"
+      ],
+      "selected_frequency": 2,
+      "new_token": "zac",
+      "corpus_tokens_after": {
+        "zab": [
+          "zab"
+        ],
+        "zac": [
+          "zac"
+        ],
+        "zut": [
+          "z",
+          "u",
+          "t"
+        ]
+      }
+    }
+  ],
+  "remaining_pair_frequencies": [
+    {
+      "pair": [
+        "u",
+        "t"
+      ],
+      "frequency": 1
+    },
+    {
+      "pair": [
+        "z",
+        "u"
+      ],
+      "frequency": 1
+    }
+  ],
+  "trees": [
+    {
+      "token": "zab",
+      "merge_frequency": 4,
+      "children": [
+        {
+          "token": "za",
+          "merge_frequency": 6,
+          "children": [
+            {
+              "token": "z"
+            },
+            {
+              "token": "a"
+            }
+          ]
+        },
+        {
+          "token": "b"
+        }
+      ]
+    },
+    {
+      "token": "zac",
+      "merge_frequency": 2,
+      "children": [
+        {
+          "token": "za",
+          "merge_frequency": 6,
+          "children": [
+            {
+              "token": "z"
+            },
+            {
+              "token": "a"
+            }
+          ]
+        },
+        {
+          "token": "c"
+        }
+      ]
+    }
+  ]
+}
