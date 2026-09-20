@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "checkpoint": "/home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/layout-smoke/model_000002.pt",
+  "checkpoint_sha256": "bbdc0b446bdfd1f350c921dff4e1a9ddaa56013c77c17a4deec43f6d9468b020",
+  "device": "cpu",
+  "parameters": 12976170
+}

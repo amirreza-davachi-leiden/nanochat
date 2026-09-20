@@ -1,0 +1,2 @@
+{"completed_updates": 1, "total_updates": 2, "smoothed_last_microbatch_loss": 10.396478, "displayed_lr_multiplier": 1.0, "step_seconds": 0.07219, "tokens_per_second": 1773}
+{"completed_updates": 2, "total_updates": 2, "smoothed_last_microbatch_loss": 10.397246, "displayed_lr_multiplier": 1.0, "step_seconds": 0.05244, "tokens_per_second": 2440}

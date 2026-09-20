@@ -1,0 +1,59 @@
+
+                                                       █████                █████
+                                                      ░░███                ░░███
+     ████████    ██████   ████████    ██████   ██████  ░███████    ██████  ███████
+    ░░███░░███  ░░░░░███ ░░███░░███  ███░░███ ███░░███ ░███░░███  ░░░░░███░░░███░
+     ░███ ░███   ███████  ░███ ░███ ░███ ░███░███ ░░░  ░███ ░███   ███████  ░███
+     ░███ ░███  ███░░███  ░███ ░███ ░███ ░███░███  ███ ░███ ░███  ███░░███  ░███ ███
+     ████ █████░░████████ ████ █████░░██████ ░░██████  ████ █████░░███████  ░░█████
+    ░░░░ ░░░░░  ░░░░░░░░ ░░░░ ░░░░░  ░░░░░░   ░░░░░░  ░░░░ ░░░░░  ░░░░░░░░   ░░░░░
+    
+2026-09-20 15:15:11,288 - nanochat.common - [32m[1mINFO[0m - Distributed world size: 1
+COMPUTE_DTYPE: torch.float32 (auto-detected: no CUDA (CPU/MPS))
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: Flash Attention 3 not available, using PyTorch SDPA fallback
+WARNING: Training will be less efficient without FA3
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Vocab size: 32,768
+Model config:
+{
+  "sequence_len": 64,
+  "vocab_size": 32768,
+  "n_layer": 2,
+  "n_head": 1,
+  "n_kv_head": 1,
+  "n_embd": 128,
+  "window_pattern": "L"
+}
+Parameter counts:
+wte                     : 4,194,304
+value_embeds            : 4,194,304
+lm_head                 : 4,194,304
+transformer_matrices    : 393,228
+scalars                 : 30
+total                   : 12,976,170
+Estimated FLOPs per token: 2.772194e+07
+Scaling LRs by 0.0156 for batch size 128 (reference: 524,288)
+Scaling weight decay from 0.280000 to 0.105000 for depth 2
+Scaling the LR for the AdamW parameters ∝1/√(128/768) = 2.449490
+Using user-provided number of iterations: 2
+Total number of training tokens: 256
+Tokens : Scaling params ratio: 0.00
+Total training FLOPs estimate: 7.096818e+09
+Tokens / micro-batch / rank: 1 x 64 = 64
+Tokens / micro-batch: 64
+Total batch size 128 => gradient accumulation steps: 2
+Step 00000 | Validation bpb: 3.468472
+step 00000/00002 (0.00%) | loss: 10.396478 | lrm: 1.00 | dt: 72.19ms | tok/sec: 1,773 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 0 | total time: 0.00m
+Step 00001 | Validation bpb: 3.468407
+2026-09-20 15:15:12,898 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved model parameters to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/layout-smoke/model_000001.pt
+2026-09-20 15:15:12,899 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved metadata to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/layout-smoke/meta_000001.json
+2026-09-20 15:15:13,484 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved optimizer state to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/layout-smoke/optim_000001_rank0.pt
+step 00001/00002 (50.00%) | loss: 10.397246 | lrm: 1.00 | dt: 52.44ms | tok/sec: 2,440 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 0 | total time: 0.00m
+Step 00002 | Validation bpb: 3.468317
+2026-09-20 15:15:14,054 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved model parameters to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/layout-smoke/model_000002.pt
+2026-09-20 15:15:14,054 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved metadata to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/layout-smoke/meta_000002.json
+2026-09-20 15:15:14,663 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved optimizer state to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/layout-smoke/optim_000002_rank0.pt
+Peak memory usage: 0.00MiB
+Total training time: 0.00m
+Minimum validation bpb: 3.468317

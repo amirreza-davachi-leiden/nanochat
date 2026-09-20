@@ -1,0 +1,18 @@
+{
+  "device": "cpu",
+  "samples": {
+    "train": {
+      "batches": 2,
+      "target_tokens": 128,
+      "sha256": "638ef9133945f5c9feb3ce9b9161bd2f3a9a43fe369cabc7c37011b5b2383305",
+      "hash_format": "Each batch's x then y, contiguous int64 bytes."
+    },
+    "val": {
+      "batches": 2,
+      "target_tokens": 128,
+      "sha256": "1c12cd1b7d2abd2a0f7f17b85c1b66fd6483f9d481cc7623a3b771883f036a04",
+      "hash_format": "Each batch's x then y, contiguous int64 bytes."
+    }
+  },
+  "policy": "Same fixed prefix of each split at every checkpoint; separate from the training iterator."
+}

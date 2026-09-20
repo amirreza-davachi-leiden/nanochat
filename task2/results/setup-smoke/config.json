@@ -1,0 +1,63 @@
+{
+  "vocab_size": 32768,
+  "dataset_revision": "915333b4f8b8684f39aeaafea600fea6f43fb703",
+  "common": {
+    "depth": 2,
+    "aspect_ratio": 64,
+    "head_dim": 128,
+    "max_seq_len": 512,
+    "device_batch_size": 2,
+    "window_pattern": "L",
+    "target_param_data_ratio": 12,
+    "eval_every": 25,
+    "eval_tokens": 16384,
+    "save_every": 25,
+    "core_metric_every": -1,
+    "sample_every": -1,
+    "run": "dummy"
+  },
+  "modes": {
+    "pilot": {
+      "device_type": "cuda",
+      "num_iterations": 20,
+      "total_batch_size": 2048,
+      "eval_every": 10,
+      "eval_tokens": 4096,
+      "save_every": 10,
+      "warmup_steps": 2,
+      "compile": false
+    },
+    "train": {
+      "device_type": "cuda",
+      "num_iterations": -1,
+      "total_batch_size": -1,
+      "warmup_steps": 40,
+      "compile": true
+    },
+    "smoke": {
+      "device_type": "cpu",
+      "num_iterations": 2,
+      "max_seq_len": 64,
+      "device_batch_size": 1,
+      "total_batch_size": 128,
+      "eval_every": 1,
+      "eval_tokens": 128,
+      "save_every": 1,
+      "warmup_steps": 1,
+      "compile": false
+    }
+  },
+  "sampling": {
+    "seed": 42,
+    "temperature": 0.8,
+    "top_k": 50,
+    "max_new_tokens": 64,
+    "prompts": [
+      "The small garden behind the house",
+      "When water freezes,",
+      "A useful way to solve a difficult problem is",
+      "The student opened the notebook and",
+      "In a city where everyone travels by bicycle,"
+    ]
+  }
+}

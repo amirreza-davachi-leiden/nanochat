@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "checkpoint": "/home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/depth2-vocab32768/model_000420.pt",
+  "checkpoint_sha256": "0fa50b9e90e3230ac4be0b8aaa660534715ecfbb213adedccc97c04d0c511451",
+  "device": "cpu",
+  "parameters": 12976170
+}
