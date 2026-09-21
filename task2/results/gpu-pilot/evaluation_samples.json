@@ -1,0 +1,18 @@
+{
+  "device": "cuda",
+  "samples": {
+    "train": {
+      "batches": 4,
+      "target_tokens": 4096,
+      "sha256": "23bc95f9f50e5b2b882b8c7ed7a9f8f0dac728ad0386d551768cb35218bdc44c",
+      "hash_format": "Each batch's x then y, contiguous int64 bytes."
+    },
+    "val": {
+      "batches": 4,
+      "target_tokens": 4096,
+      "sha256": "dbe6b56e619961a83ec3f25404a9b4e69edf7e6c84109e649ac514fcb77c58f7",
+      "hash_format": "Each batch's x then y, contiguous int64 bytes."
+    }
+  },
+  "policy": "Same fixed prefix of each split at every checkpoint; separate from the training iterator."
+}

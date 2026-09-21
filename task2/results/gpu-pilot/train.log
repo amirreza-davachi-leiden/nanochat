@@ -1,0 +1,76 @@
+
+                                                       █████                █████
+                                                      ░░███                ░░███
+     ████████    ██████   ████████    ██████   ██████  ░███████    ██████  ███████
+    ░░███░░███  ░░░░░███ ░░███░░███  ███░░███ ███░░███ ░███░░███  ░░░░░███░░░███░
+     ░███ ░███   ███████  ░███ ░███ ░███ ░███░███ ░░░  ░███ ░███   ███████  ░███
+     ░███ ░███  ███░░███  ░███ ░███ ░███ ░███░███  ███ ░███ ░███  ███░░███  ░███ ███
+     ████ █████░░████████ ████ █████░░██████ ░░██████  ████ █████░░███████  ░░█████
+    ░░░░ ░░░░░  ░░░░░░░░ ░░░░ ░░░░░  ░░░░░░   ░░░░░░  ░░░░ ░░░░░  ░░░░░░░░   ░░░░░
+    
+2026-09-20 15:54:56,889 - nanochat.common - [32m[1mINFO[0m - Distributed world size: 1
+2026-09-20 15:54:56,890 - nanochat.common - [33m[1mWARNING[0m - Peak flops undefined for: NVIDIA GeForce RTX 4060, MFU will show as 0%
+GPU: NVIDIA GeForce RTX 4060 | Peak FLOPS (BF16): inf
+COMPUTE_DTYPE: torch.bfloat16 (auto-detected: CUDA SM 89 (bf16 supported))
+✓ Using Flash Attention 3: efficient, new and awesome.
+Vocab size: 32,768
+Model config:
+{
+  "sequence_len": 512,
+  "vocab_size": 32768,
+  "n_layer": 2,
+  "n_head": 1,
+  "n_kv_head": 1,
+  "n_embd": 128,
+  "window_pattern": "L"
+}
+Parameter counts:
+wte                     : 4,194,304
+value_embeds            : 4,194,304
+lm_head                 : 4,194,304
+transformer_matrices    : 393,228
+scalars                 : 30
+total                   : 12,976,170
+Estimated FLOPs per token: 2.909820e+07
+Scaling LRs by 0.0625 for batch size 2,048 (reference: 524,288)
+Scaling weight decay from 0.280000 to 0.420001 for depth 2
+Scaling the LR for the AdamW parameters ∝1/√(128/768) = 2.449490
+Using user-provided number of iterations: 20
+Total number of training tokens: 40,960
+Tokens : Scaling params ratio: 0.01
+Total training FLOPs estimate: 1.191862e+12
+Tokens / micro-batch / rank: 2 x 512 = 1,024
+Tokens / micro-batch: 1,024
+Total batch size 2,048 => gradient accumulation steps: 2
+Step 00000 | Validation bpb: 3.052388
+step 00000/00020 (0.00%) | loss: 10.397137 | lrm: 0.50 | dt: 1452.53ms | tok/sec: 1,409 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 0 | total time: 0.00m
+step 00001/00020 (5.00%) | loss: 10.395989 | lrm: 1.00 | dt: 36.95ms | tok/sec: 55,419 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 0 | total time: 0.00m
+step 00002/00020 (10.00%) | loss: 10.393244 | lrm: 1.00 | dt: 41.08ms | tok/sec: 49,858 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m
+step 00003/00020 (15.00%) | loss: 10.385900 | lrm: 1.00 | dt: 36.44ms | tok/sec: 56,194 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m
+step 00004/00020 (20.00%) | loss: 10.380547 | lrm: 1.00 | dt: 36.33ms | tok/sec: 56,368 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m
+step 00005/00020 (25.00%) | loss: 10.371063 | lrm: 1.00 | dt: 36.14ms | tok/sec: 56,674 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m
+step 00006/00020 (30.00%) | loss: 10.354145 | lrm: 1.00 | dt: 35.90ms | tok/sec: 57,052 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m
+step 00007/00020 (35.00%) | loss: 10.338792 | lrm: 1.00 | dt: 35.77ms | tok/sec: 57,257 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m
+step 00008/00020 (40.00%) | loss: 10.320201 | lrm: 0.93 | dt: 35.90ms | tok/sec: 57,050 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m
+step 00009/00020 (45.00%) | loss: 10.295425 | lrm: 0.85 | dt: 35.87ms | tok/sec: 57,097 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m
+Step 00010 | Validation bpb: 2.959267
+2026-09-20 15:55:06,648 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved model parameters to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/gpu-pilot/model_000010.pt
+2026-09-20 15:55:06,648 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved metadata to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/gpu-pilot/meta_000010.json
+2026-09-20 15:55:06,774 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved optimizer state to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/gpu-pilot/optim_000010_rank0.pt
+step 00010/00020 (50.00%) | loss: 10.265313 | lrm: 0.78 | dt: 36.42ms | tok/sec: 56,232 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m
+step 00011/00020 (55.00%) | loss: 10.234355 | lrm: 0.71 | dt: 36.03ms | tok/sec: 56,840 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m | eta: 0.0m
+step 00012/00020 (60.00%) | loss: 10.196632 | lrm: 0.63 | dt: 35.84ms | tok/sec: 57,137 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m | eta: 0.0m
+step 00013/00020 (65.00%) | loss: 10.157023 | lrm: 0.56 | dt: 35.93ms | tok/sec: 57,000 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m | eta: 0.0m
+step 00014/00020 (70.00%) | loss: 10.120109 | lrm: 0.49 | dt: 35.98ms | tok/sec: 56,920 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m | eta: 0.0m
+step 00015/00020 (75.00%) | loss: 10.065664 | lrm: 0.42 | dt: 35.93ms | tok/sec: 57,002 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m | eta: 0.0m
+step 00016/00020 (80.00%) | loss: 10.018072 | lrm: 0.34 | dt: 35.92ms | tok/sec: 57,014 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m | eta: 0.0m
+step 00017/00020 (85.00%) | loss: 9.978078 | lrm: 0.27 | dt: 35.96ms | tok/sec: 56,945 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m | eta: 0.0m
+step 00018/00020 (90.00%) | loss: 9.932947 | lrm: 0.20 | dt: 38.80ms | tok/sec: 52,779 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.00m | eta: 0.0m
+step 00019/00020 (95.00%) | loss: 9.905767 | lrm: 0.12 | dt: 36.01ms | tok/sec: 56,870 | bf16_mfu: 0.00 | epoch: 1 pq: 0 rg: 1 | total time: 0.01m | eta: 0.0m
+Step 00020 | Validation bpb: 2.828860
+2026-09-20 15:55:07,357 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved model parameters to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/gpu-pilot/model_000020.pt
+2026-09-20 15:55:07,357 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved metadata to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/gpu-pilot/meta_000020.json
+2026-09-20 15:55:07,482 - nanochat.checkpoint_manager - [32m[1mINFO[0m - Saved optimizer state to: /home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/gpu-pilot/optim_000020_rank0.pt
+Peak memory usage: 682.28MiB
+Total training time: 0.01m
+Minimum validation bpb: 2.828860

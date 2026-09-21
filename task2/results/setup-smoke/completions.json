@@ -1,0 +1,131 @@
+{
+  "run": "setup-smoke",
+  "mode": "smoke",
+  "checkpoint_sha256": "bbdc0b446bdfd1f350c921dff4e1a9ddaa56013c77c17a4deec43f6d9468b020",
+  "settings": {
+    "seed": 42,
+    "temperature": 0.8,
+    "top_k": 50,
+    "max_new_tokens": 4,
+    "prompts": [
+      "The small garden behind the house",
+      "When water freezes,",
+      "A useful way to solve a difficult problem is",
+      "The student opened the notebook and",
+      "In a city where everyone travels by bicycle,"
+    ]
+  },
+  "device": "cpu",
+  "note": "Raw prompts with a document BOS token; no system prompt or chat template.",
+  "examples": [
+    {
+      "prompt": "The small garden behind the house",
+      "completion": " prime evaluate luckyA",
+      "full_text": "The small garden behind the house prime evaluate luckyA",
+      "prompt_ids": [
+        32759,
+        483,
+        948,
+        1790,
+        2775,
+        262,
+        1931
+      ],
+      "completion_ids": [
+        10808,
+        7126,
+        12001,
+        65
+      ],
+      "seed": 42
+    },
+    {
+      "prompt": "When water freezes,",
+      "completion": "aspberry allergighthouse bulk",
+      "full_text": "When water freezes,aspberry allergighthouse bulk",
+      "prompt_ids": [
+        32759,
+        1718,
+        668,
+        24239,
+        44
+      ],
+      "completion_ids": [
+        14134,
+        4470,
+        28791,
+        9524
+      ],
+      "seed": 43
+    },
+    {
+      "prompt": "A useful way to solve a difficult problem is",
+      "completion": " polypropylene pronunciationurer houses",
+      "full_text": "A useful way to solve a difficult problem is polypropylene pronunciationurer houses",
+      "prompt_ids": [
+        32759,
+        65,
+        3057,
+        821,
+        283,
+        5232,
+        257,
+        1973,
+        1551,
+        306
+      ],
+      "completion_ids": [
+        32112,
+        27486,
+        21176,
+        7716
+      ],
+      "seed": 44
+    },
+    {
+      "prompt": "The student opened the notebook and",
+      "completion": " adult Lincra located",
+      "full_text": "The student opened the notebook and adult Lincra located",
+      "prompt_ids": [
+        32759,
+        483,
+        2881,
+        7552,
+        262,
+        22842,
+        288
+      ],
+      "completion_ids": [
+        2519,
+        11786,
+        22141,
+        3590
+      ],
+      "seed": 45
+    },
+    {
+      "prompt": "In a city where everyone travels by bicycle,",
+      "completion": " Video counsel defrost two",
+      "full_text": "In a city where everyone travels by bicycle, Video counsel defrost two",
+      "prompt_ids": [
+        32759,
+        845,
+        257,
+        3269,
+        815,
+        2901,
+        11343,
+        429,
+        10801,
+        44
+      ],
+      "completion_ids": [
+        11322,
+        15526,
+        23063,
+        802
+      ],
+      "seed": 46
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "checkpoint": "/home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/gpu-pilot/model_000020.pt",
+  "checkpoint_sha256": "8e2c4eea74e1cb6e025facf9653c2e6df71ad6868654ec034bb30537dce6e2cc",
+  "device": "cpu",
+  "parameters": 12976170
+}
