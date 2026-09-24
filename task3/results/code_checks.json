@@ -1,0 +1,23 @@
+{
+  "checked_at_utc": "2026-09-24T14:31:44.979850+00:00",
+  "scope": "Non-training code checks; no model training or benchmark evaluation performed",
+  "checks_passed": 10,
+  "checks": [
+    "Long-answer targets retained exactly once, with padding masked",
+    "Datasets with no supervised targets fail instead of looping",
+    "Actual 32768-token tokenizer: tool outputs masked and assistant targets preserved across windows",
+    "Stage 1 and Stage 2 select only their assigned datasets and repetitions",
+    "Stage 2 requires a completed mid-training record",
+    "Learning-rate warmup and decay boundaries, including short runs",
+    "Dry runs do not initialize the runtime or write experiment results",
+    "Invalid settings are rejected",
+    "Subset benchmark tables are labelled and do not invent missing-stage scores",
+    "Prompt and padding targets have zero cross-entropy gradient contribution"
+  ],
+  "script_sha256": "634f835ffba8f2de81f5e20edb3595aa8508625c020e3b6214e825d9e3d69a85",
+  "config_sha256": "04987699ec5aefd994c9da43fc28e013da0ab0fff2d788120fb997fe26067497",
+  "limitations": [
+    "GPU training and checkpoint reload after training have not been exercised.",
+    "Full benchmark execution has not been exercised."
+  ]
+}

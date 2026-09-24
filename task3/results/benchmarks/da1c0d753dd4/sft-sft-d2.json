@@ -1,0 +1,49 @@
+{
+  "stage": "sft",
+  "run": "sft-d2",
+  "checkpoint_directory": "/home/s4784863/agentic_assignment1/task3/artifacts/checkpoints/sft-d2",
+  "checkpoint_step": 1000,
+  "checkpoint_sha256": "19ed6f1c950240694c60b221da43e0154a11d9d8001f0db7aaf5c7ad2404b866",
+  "protocol": {
+    "batch_size": 1,
+    "num_samples": 1,
+    "max_new_tokens": 512,
+    "temperature": 0.0,
+    "top_k": 50,
+    "max_problems": null,
+    "tasks": [
+      "ARC-Easy",
+      "ARC-Challenge",
+      "GSM8K"
+    ],
+    "seed": 42,
+    "compute_dtype": "torch.bfloat16",
+    "tokenizer_sha256": "1bd1d067dce90ffb51e3064f233d931d5b9941ea0bd8fc72ef40353a48209eec",
+    "test_files": [
+      {
+        "file": "cache/task_data/allenai--ai2_arc/ARC-Easy/test/00000.parquet",
+        "sha256": "4160597d618ae851c7eb04e281574f3f654776216ac6b6641588d64527b47177"
+      },
+      {
+        "file": "cache/task_data/allenai--ai2_arc/ARC-Challenge/test/00000.parquet",
+        "sha256": "62f03257e737aed263f55c6abf87c7bb0028a44a6bdd2a26eb1279eb42c1d1e9"
+      },
+      {
+        "file": "cache/task_data/openai--gsm8k/main/test/00000.parquet",
+        "sha256": "ee7b8da9e381df27b9e3f7758a159ab2bdaa4dbaa910546cbbc47e0cb44e4f59"
+      }
+    ]
+  },
+  "scores": {
+    "ARC-Easy": 0.25084175084175087,
+    "ARC-Challenge": 0.22696245733788395,
+    "GSM8K": 0.0
+  },
+  "evaluated_examples": {
+    "ARC-Easy": 2376,
+    "ARC-Challenge": 1172,
+    "GSM8K": 1319
+  },
+  "seconds": 1555.7436352779623,
+  "evaluated_utc": "2026-09-24T20:02:01.544155+00:00"
+}
