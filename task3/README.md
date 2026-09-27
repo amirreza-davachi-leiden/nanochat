@@ -2,14 +2,42 @@
 
 **Ready to run? Start with [Run the experiment](#run-the-experiment).**
 
-**Recorded run status:** Stage 1 (`mid-d2`) and Stage 2 (`sft-d2`) each completed 1,000 optimizer updates. Full ARC-Easy, ARC-Challenge, and GSM-8K evaluations are saved for the base, mid-trained, and SFT models; see the [saved benchmark table](results/benchmarks/da1c0d753dd4/scores.md). Model checkpoints remain local and are excluded from Git. The report analysis is separate from these recorded experiments.
+**Recorded run status:** The original Stage 1 and Stage 2 runs (mid-d2 and
+sft-d2), and the later runs named mid-d2-bestfit and sft-d2-bestfit, each
+completed 1,000 optimizer updates. Full ARC-Easy, ARC-Challenge, and GSM-8K
+results for all four runs and the base model are in the
+[saved benchmark table](results/benchmarks/da1c0d753dd4/scores.md).
+Model checkpoints remain local and are excluded from Git.
 
-**Batching update:** Those recorded runs used the earlier one-window-per-row
-loader. New runs use nanochat-style best-fit packing from a 100-conversation
-buffer. A conversation too long for one row is counted and skipped before it
-enters the buffer; this safety check is not in nanochat's original SFT loader.
-The saved results above are historical evidence, not results of the new
-loader. Use new run names and evaluate again before comparing methods.
+**Which code produced the results:** Despite their names, mid-d2-bestfit and
+sft-d2-bestfit also used the earlier window-based loader. Their run records
+contain runner SHA-256
+634f835ffba8f2de81f5e20edb3595aa8508625c020e3b6214e825d9e3d69a85,
+matching the [historical Task 3 script](https://github.com/amirreza-davachi-leiden/nanochat/blob/16766822b9a0d09b427bd3cc5d68168d6d3d1ac5/task3/task3.py).
+Their data counters report 8,000 windows per stage, 90,520 supervised mid
+training targets and 2,515,204 supervised SFT targets. These records do not
+measure best-fit packing; the run names are preserved as recorded.
+
+The later mid run scored 26.73% on ARC-Easy, 25.94% on ARC-Challenge, and
+0.61% on GSM-8K. Its SFT checkpoint scored 25.08%, 22.70%, and 0.00%.
+The source/checkpoint hashes connect the new SFT run to the new mid run,
+and all evaluations use the same full-test protocol.
+
+**Current batching implementation:** This repository's Task 3 script uses
+nanochat-style best-fit packing from a 100-conversation buffer. Conversations
+longer than one row are counted and skipped before entering the buffer;
+this safety check is not in nanochat's original SFT loader. No completed
+best-fit training results have been recorded here yet. The commands below
+use fresh run names ending in bestfit-v2 to distinguish a future run with
+this implementation from the existing records.
+
+On the lab machine, the working folder at
+/home/s4784863/agentic_assignment1/task3 is separate from the repository
+folder at /home/s4784863/agentic_assignment1/nanochat/task3. Pulling this
+repository updates the latter; it does not update the sibling working
+folder. Run from the intended checkout and check the script path before
+training. Cached data, the tokenizer and checkpoints must also be available
+under the paths that checkout expects.
 
 Open [task3_experiments.ipynb](task3_experiments.ipynb). It starts with the
 assignment's data sanity check in section 5.7.1: inspect MMLU and SmolTalk,
@@ -276,7 +304,7 @@ This preview prints the input checkpoint, datasets, settings and output director
 It does not load model weights or start training:
 
 ```bash
-"$TASK3_PYTHON" -B task3/task3.py train --stage mid --name mid-d2-bestfit --steps 1000 --device cuda --dry-run
+"$TASK3_PYTHON" -B task3/task3.py train --stage mid --name mid-d2-bestfit-v2 --steps 1000 --device cuda --dry-run
 ```
 
 Save the concrete token-level example needed for the report's loss-masking question:
@@ -324,37 +352,37 @@ It prints the folder where it saved the benchmark evidence.
 Train on MMLU + GSM-8K:
 
 ```bash
-"$TASK3_PYTHON" -B task3/task3.py train --stage mid --name mid-d2-bestfit --steps 1000 --device cuda
+"$TASK3_PYTHON" -B task3/task3.py train --stage mid --name mid-d2-bestfit-v2 --steps 1000 --device cuda
 ```
 
 After it finishes successfully, evaluate its checkpoint:
 
 ```bash
-"$TASK3_PYTHON" -B task3/task3.py evaluate --stage mid --run mid-d2-bestfit --device cuda
+"$TASK3_PYTHON" -B task3/task3.py evaluate --stage mid --run mid-d2-bestfit-v2 --device cuda
 ```
 
 The final model is saved as
-`task3/artifacts/checkpoints/mid-d2-bestfit/model_001000.pt`.
-Training settings and losses are in `task3/results/mid-d2-bestfit/`.
+`task3/artifacts/checkpoints/mid-d2-bestfit-v2/model_001000.pt`.
+Training settings and losses are in `task3/results/mid-d2-bestfit-v2/`.
 
 ### 6. Train and evaluate Stage 2: SFT
 
-Load the completed **mid-d2-bestfit** checkpoint and train only on SmolTalk:
+Load the completed **mid-d2-bestfit-v2** checkpoint and train only on SmolTalk:
 
 ```bash
-"$TASK3_PYTHON" -B task3/task3.py train --stage sft --name sft-d2-bestfit --from-run mid-d2-bestfit --steps 1000 --device cuda
+"$TASK3_PYTHON" -B task3/task3.py train --stage sft --name sft-d2-bestfit-v2 --from-run mid-d2-bestfit-v2 --steps 1000 --device cuda
 ```
 
-Here, **`--from-run mid-d2-bestfit`** selects the new Stage 1 checkpoint. After training
+Here, **`--from-run mid-d2-bestfit-v2`** selects the new Stage 1 checkpoint. After training
 finishes successfully, evaluate the SFT model:
 
 ```bash
-"$TASK3_PYTHON" -B task3/task3.py evaluate --stage sft --run sft-d2-bestfit --device cuda
+"$TASK3_PYTHON" -B task3/task3.py evaluate --stage sft --run sft-d2-bestfit-v2 --device cuda
 ```
 
 The final model is saved as
-`task3/artifacts/checkpoints/sft-d2-bestfit/model_001000.pt`.
-Training settings and losses are in `task3/results/sft-d2-bestfit/`.
+`task3/artifacts/checkpoints/sft-d2-bestfit-v2/model_001000.pt`.
+Training settings and losses are in `task3/results/sft-d2-bestfit-v2/`.
 
 ### 7. Open the recorded results
 
