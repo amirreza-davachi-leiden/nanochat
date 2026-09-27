@@ -1,0 +1,149 @@
+{
+  "stage": "sft",
+  "source_stage": "mid",
+  "source_directory": "/home/s4784863/agentic_assignment1/task3/artifacts/checkpoints/mid-d2",
+  "source_step": 1000,
+  "output_directory": "/home/s4784863/agentic_assignment1/task3/artifacts/checkpoints/sft-d2",
+  "settings": {
+    "device": "cuda",
+    "steps": 1000,
+    "sequence_length": 512,
+    "batch_size": 2,
+    "gradient_accumulation": 4,
+    "mmlu_repetitions": 3,
+    "gsm8k_repetitions": 4,
+    "embedding_lr": 0.3,
+    "unembedding_lr": 0.008,
+    "matrix_lr": 0.02,
+    "initial_lr_fraction": 0.1,
+    "warmup_steps": 20,
+    "warmdown_fraction": 0.5,
+    "final_lr_fraction": 0.1,
+    "compile": true,
+    "log_every": 10,
+    "checkpoint_every": 250
+  },
+  "datasets": [
+    "SmolTalk"
+  ],
+  "status": "complete",
+  "started_utc": "2026-09-24T19:34:28.334015+00:00",
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 4060",
+  "compute_dtype": "torch.bfloat16",
+  "seed": 42,
+  "optimizer_warm_start": false,
+  "trainable_parameters": 12976170,
+  "source_sha256": "b8a2ae4c109823aed0ffe262e5d66d9e05615af303f07a192aef42070a2fe7f1",
+  "tokenizer_sha256": "1bd1d067dce90ffb51e3064f233d931d5b9941ea0bd8fc72ef40353a48209eec",
+  "runner_sha256": "634f835ffba8f2de81f5e20edb3595aa8508625c020e3b6214e825d9e3d69a85",
+  "inspection_sha256": "c5d032b88227be769b537a4af3be0a69ec2c0e0b40fbceb917f84b56c5b2194a",
+  "nanochat_commit": "92d63d4e8bb4df75c3b71618f31ddde2378b2bcd",
+  "dataset_counts": [
+    {
+      "dataset": "SmolTalk",
+      "repo": "HuggingFaceTB/smol-smoltalk",
+      "subset": "default",
+      "split": "train",
+      "rows": 460341,
+      "repetitions": 1,
+      "mixture_entries": 460341
+    }
+  ],
+  "dataset_files": [
+    {
+      "dataset": "SmolTalk",
+      "file": "cache/task_data/HuggingFaceTB--smol-smoltalk/default/train/00000.parquet",
+      "bytes": 229710350,
+      "rows": 115086,
+      "sha256": "498cd4580014f42c40cfde066573564ed28e3e1548a5566715b615f5ea932856"
+    },
+    {
+      "dataset": "SmolTalk",
+      "file": "cache/task_data/HuggingFaceTB--smol-smoltalk/default/train/00001.parquet",
+      "bytes": 230298184,
+      "rows": 115085,
+      "sha256": "5412c03df579fc7dd7d06c7f5249627d99d0621882fb8f2cd5c13582eb2a80f6"
+    },
+    {
+      "dataset": "SmolTalk",
+      "file": "cache/task_data/HuggingFaceTB--smol-smoltalk/default/train/00002.parquet",
+      "bytes": 230587255,
+      "rows": 115085,
+      "sha256": "aefcac6571abf275b4e1629baa01f326c0fe279d35cd0349b7439319923815a7"
+    },
+    {
+      "dataset": "SmolTalk",
+      "file": "cache/task_data/HuggingFaceTB--smol-smoltalk/default/train/00003.parquet",
+      "bytes": 231879938,
+      "rows": 115085,
+      "sha256": "c15edfca888c9924a626dad7b7f4e9f08d8f406f997ac13be46bc9be0a6192db"
+    }
+  ],
+  "optimizer_groups": [
+    {
+      "kind": "adamw",
+      "learning_rate": 0.0019595917942265427,
+      "weight_decay": 0.01
+    },
+    {
+      "kind": "adamw",
+      "learning_rate": 0.07348469228349534,
+      "weight_decay": 0.001
+    },
+    {
+      "kind": "adamw",
+      "learning_rate": 0.03674234614174767,
+      "weight_decay": 0.01
+    },
+    {
+      "kind": "adamw",
+      "learning_rate": 0.0005,
+      "weight_decay": 0.05
+    },
+    {
+      "kind": "adamw",
+      "learning_rate": 0.05,
+      "weight_decay": 0.0
+    },
+    {
+      "kind": "adamw",
+      "learning_rate": 0.020000000000000004,
+      "weight_decay": 0.0
+    },
+    {
+      "kind": "muon",
+      "learning_rate": 0.002,
+      "weight_decay": 0.0
+    },
+    {
+      "kind": "muon",
+      "learning_rate": 0.002,
+      "weight_decay": 0.0
+    },
+    {
+      "kind": "muon",
+      "learning_rate": 0.002,
+      "weight_decay": 0.0
+    },
+    {
+      "kind": "muon",
+      "learning_rate": 0.002,
+      "weight_decay": 0.0
+    }
+  ],
+  "batch_token_positions": 4096,
+  "checkpoint_step": 1000,
+  "checkpoint_sha256": "19ed6f1c950240694c60b221da43e0154a11d9d8001f0db7aaf5c7ad2404b866",
+  "finished_utc": "2026-09-24T19:35:24.776506+00:00",
+  "training_seconds": 55.94664906198159,
+  "data_stats": {
+    "conversations_opened": 3933,
+    "long_conversations": 2546,
+    "context_only_windows_skipped": 684,
+    "windows_prepared": 8000,
+    "padding_positions": 1059143
+  },
+  "supervised_target_tokens": 2515204,
+  "optimizer_updates": 1000
+}

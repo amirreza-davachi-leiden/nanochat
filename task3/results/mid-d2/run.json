@@ -1,0 +1,145 @@
+{
+  "stage": "mid",
+  "source_stage": "base",
+  "source_directory": "/home/s4784863/agentic_assignment1/task2/artifacts/base_checkpoints/depth2-vocab32768",
+  "source_step": 420,
+  "output_directory": "/home/s4784863/agentic_assignment1/task3/artifacts/checkpoints/mid-d2",
+  "settings": {
+    "device": "cuda",
+    "steps": 1000,
+    "sequence_length": 512,
+    "batch_size": 2,
+    "gradient_accumulation": 4,
+    "mmlu_repetitions": 3,
+    "gsm8k_repetitions": 4,
+    "embedding_lr": 0.3,
+    "unembedding_lr": 0.008,
+    "matrix_lr": 0.02,
+    "initial_lr_fraction": 0.1,
+    "warmup_steps": 20,
+    "warmdown_fraction": 0.5,
+    "final_lr_fraction": 0.1,
+    "compile": true,
+    "log_every": 10,
+    "checkpoint_every": 250
+  },
+  "datasets": [
+    "MMLU",
+    "GSM8K"
+  ],
+  "status": "complete",
+  "started_utc": "2026-09-24T19:09:51.890772+00:00",
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 4060",
+  "compute_dtype": "torch.bfloat16",
+  "seed": 42,
+  "optimizer_warm_start": false,
+  "trainable_parameters": 12976170,
+  "source_sha256": "0fa50b9e90e3230ac4be0b8aaa660534715ecfbb213adedccc97c04d0c511451",
+  "tokenizer_sha256": "1bd1d067dce90ffb51e3064f233d931d5b9941ea0bd8fc72ef40353a48209eec",
+  "runner_sha256": "634f835ffba8f2de81f5e20edb3595aa8508625c020e3b6214e825d9e3d69a85",
+  "inspection_sha256": "c5d032b88227be769b537a4af3be0a69ec2c0e0b40fbceb917f84b56c5b2194a",
+  "nanochat_commit": "92d63d4e8bb4df75c3b71618f31ddde2378b2bcd",
+  "dataset_counts": [
+    {
+      "dataset": "MMLU",
+      "repo": "cais/mmlu",
+      "subset": "all",
+      "split": "auxiliary_train",
+      "rows": 99842,
+      "repetitions": 3,
+      "mixture_entries": 299526
+    },
+    {
+      "dataset": "GSM8K",
+      "repo": "openai/gsm8k",
+      "subset": "main",
+      "split": "train",
+      "rows": 7473,
+      "repetitions": 4,
+      "mixture_entries": 29892
+    }
+  ],
+  "dataset_files": [
+    {
+      "dataset": "MMLU",
+      "file": "cache/task_data/cais--mmlu/all/auxiliary_train/00000.parquet",
+      "bytes": 47513731,
+      "rows": 99842,
+      "sha256": "5126bb35f06c8ab7ac54be3c60ab02cf33adf8b93a79dcfeb071f53cac74efde"
+    },
+    {
+      "dataset": "GSM8K",
+      "file": "cache/task_data/openai--gsm8k/main/train/00000.parquet",
+      "bytes": 2306545,
+      "rows": 7473,
+      "sha256": "ea82612ea9582142387730c793eb67d3b12849002bc0b7fa6f8efafa7351419d"
+    }
+  ],
+  "optimizer_groups": [
+    {
+      "kind": "adamw",
+      "learning_rate": 0.0019595917942265427,
+      "weight_decay": 0.01
+    },
+    {
+      "kind": "adamw",
+      "learning_rate": 0.07348469228349534,
+      "weight_decay": 0.001
+    },
+    {
+      "kind": "adamw",
+      "learning_rate": 0.03674234614174767,
+      "weight_decay": 0.01
+    },
+    {
+      "kind": "adamw",
+      "learning_rate": 0.0005,
+      "weight_decay": 0.05
+    },
+    {
+      "kind": "adamw",
+      "learning_rate": 0.05,
+      "weight_decay": 0.0
+    },
+    {
+      "kind": "adamw",
+      "learning_rate": 0.020000000000000004,
+      "weight_decay": 0.0
+    },
+    {
+      "kind": "muon",
+      "learning_rate": 0.002,
+      "weight_decay": 0.0
+    },
+    {
+      "kind": "muon",
+      "learning_rate": 0.002,
+      "weight_decay": 0.0
+    },
+    {
+      "kind": "muon",
+      "learning_rate": 0.002,
+      "weight_decay": 0.0
+    },
+    {
+      "kind": "muon",
+      "learning_rate": 0.002,
+      "weight_decay": 0.0
+    }
+  ],
+  "batch_token_positions": 4096,
+  "checkpoint_step": 1000,
+  "checkpoint_sha256": "b8a2ae4c109823aed0ffe262e5d66d9e05615af303f07a192aef42070a2fe7f1",
+  "finished_utc": "2026-09-24T19:13:33.066241+00:00",
+  "training_seconds": 221.1054151430726,
+  "data_stats": {
+    "conversations_opened": 7986,
+    "long_conversations": 1057,
+    "context_only_windows_skipped": 1056,
+    "windows_prepared": 8000,
+    "padding_positions": 1754789
+  },
+  "supervised_target_tokens": 90520,
+  "optimizer_updates": 1000
+}

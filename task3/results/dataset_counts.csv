@@ -1,0 +1,4 @@
+dataset,stage,repo,config,split,training_rows,repetitions,mixture_entries
+MMLU,Stage 1,cais/mmlu,all,auxiliary_train,99842,3,299526
+GSM-8K,Stage 1,openai/gsm8k,main,train,7473,4,29892
+SmolTalk,Stage 2,HuggingFaceTB/smol-smoltalk,default,train,460341,1,460341

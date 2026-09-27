@@ -1,0 +1,83 @@
+{
+  "inspected_at_utc": "2026-09-24T12:33:31.464767+00:00",
+  "nanochat_commit": "92d63d4e8bb4df75c3b71618f31ddde2378b2bcd",
+  "shuffle_seed": 42,
+  "preview_rows": 3,
+  "example_index": 0,
+  "dataset_revision_pinned": false,
+  "packages": {
+    "numpy": "1.26.4",
+    "pyarrow": "21.0.0",
+    "torch": "2.9.1+cu128"
+  },
+  "counts": [
+    {
+      "dataset": "MMLU",
+      "stage": "Stage 1",
+      "repo": "cais/mmlu",
+      "config": "all",
+      "split": "auxiliary_train",
+      "training_rows": 99842,
+      "repetitions": 3,
+      "mixture_entries": 299526
+    },
+    {
+      "dataset": "GSM-8K",
+      "stage": "Stage 1",
+      "repo": "openai/gsm8k",
+      "config": "main",
+      "split": "train",
+      "training_rows": 7473,
+      "repetitions": 4,
+      "mixture_entries": 29892
+    },
+    {
+      "dataset": "SmolTalk",
+      "stage": "Stage 2",
+      "repo": "HuggingFaceTB/smol-smoltalk",
+      "config": "default",
+      "split": "train",
+      "training_rows": 460341,
+      "repetitions": 1,
+      "mixture_entries": 460341
+    }
+  ],
+  "shards": [
+    {
+      "dataset": "MMLU",
+      "file": "cache/task_data/cais--mmlu/all/auxiliary_train/00000.parquet",
+      "bytes": 47513731,
+      "sha256": "5126bb35f06c8ab7ac54be3c60ab02cf33adf8b93a79dcfeb071f53cac74efde"
+    },
+    {
+      "dataset": "GSM-8K",
+      "file": "cache/task_data/openai--gsm8k/main/train/00000.parquet",
+      "bytes": 2306545,
+      "sha256": "ea82612ea9582142387730c793eb67d3b12849002bc0b7fa6f8efafa7351419d"
+    },
+    {
+      "dataset": "SmolTalk",
+      "file": "cache/task_data/HuggingFaceTB--smol-smoltalk/default/train/00000.parquet",
+      "bytes": 229710350,
+      "sha256": "498cd4580014f42c40cfde066573564ed28e3e1548a5566715b615f5ea932856"
+    },
+    {
+      "dataset": "SmolTalk",
+      "file": "cache/task_data/HuggingFaceTB--smol-smoltalk/default/train/00001.parquet",
+      "bytes": 230298184,
+      "sha256": "5412c03df579fc7dd7d06c7f5249627d99d0621882fb8f2cd5c13582eb2a80f6"
+    },
+    {
+      "dataset": "SmolTalk",
+      "file": "cache/task_data/HuggingFaceTB--smol-smoltalk/default/train/00002.parquet",
+      "bytes": 230587255,
+      "sha256": "aefcac6571abf275b4e1629baa01f326c0fe279d35cd0349b7439319923815a7"
+    },
+    {
+      "dataset": "SmolTalk",
+      "file": "cache/task_data/HuggingFaceTB--smol-smoltalk/default/train/00003.parquet",
+      "bytes": 231879938,
+      "sha256": "c15edfca888c9924a626dad7b7f4e9f08d8f406f997ac13be46bc9be0a6192db"
+    }
+  ]
+}

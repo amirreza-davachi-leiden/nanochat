@@ -1,0 +1,5 @@
+cache/
+.venv/
+.ipynb_checkpoints/
+__pycache__/
+artifacts/
