@@ -4,6 +4,13 @@
 
 **Recorded run status:** Stage 1 (`mid-d2`) and Stage 2 (`sft-d2`) each completed 1,000 optimizer updates. Full ARC-Easy, ARC-Challenge, and GSM-8K evaluations are saved for the base, mid-trained, and SFT models; see the [saved benchmark table](results/benchmarks/da1c0d753dd4/scores.md). Model checkpoints remain local and are excluded from Git. The report analysis is separate from these recorded experiments.
 
+**Batching update:** Those recorded runs used the earlier one-window-per-row
+loader. New runs use nanochat-style best-fit packing from a 100-conversation
+buffer. A conversation too long for one row is counted and skipped before it
+enters the buffer; this safety check is not in nanochat's original SFT loader.
+The saved results above are historical evidence, not results of the new
+loader. Use new run names and evaluate again before comparing methods.
+
 Open [task3_experiments.ipynb](task3_experiments.ipynb). It starts with the
 assignment's data sanity check in section 5.7.1: inspect MMLU and SmolTalk,
 count their training examples, and understand one example. It also inspects
@@ -12,10 +19,9 @@ GSM-8K, the other Stage 1 dataset.
 ## Run it in VS Code
 
 1. Open the notebook and click **Select Kernel**.
-2. Choose **Select Another Kernel → Jupyter Kernels → Python (Task 2)**,
-   using the kernel we registered. Its interpreter should be
-   `<repository-root>/task2/.venv/bin/python`.
-   Alternatively, select that interpreter under **Python Environments**.
+2. Choose the existing project environment under **Select Kernel**. On the
+   Mac checkout its interpreter is `<repository-root>/.venv/bin/python`; on
+   the lab machine it may be `<repository-root>/task2/.venv/bin/python`.
 3. Run cells from top to bottom, or choose **Run All**.
 
 The existing Task 2 environment contains the data-loading packages and
@@ -64,7 +70,9 @@ these results and the conceptual questions in the assignment.
 There is one training/evaluation Python file: [task3.py](task3.py).
 [config.json](config.json) holds the starting settings. This is a Task 3
 adaptation of `scripts/chat_sft.py`; the original nanochat files are
-unchanged. The model, tokenizer, dataset classes, optimizer, checkpoint format,
+unchanged. The assignment literally asks for an edit to that script, so this
+separate runner should be explained as an alternative implementation in the
+report or cleared with the teaching assistant. The model, tokenizer, dataset classes, optimizer, checkpoint format,
 and benchmark evaluator all come from nanochat.
 
 The main functions are:
@@ -72,7 +80,8 @@ The main functions are:
 | Function | What it does |
 |---|---|
 | `make_dataset()` | Select MMLU + GSM-8K for Stage 1, or SmolTalk for Stage 2. |
-| `training_batches()` | Tokenize conversations, make input/target pairs, and mask targets. |
+| `training_batches()` | Best-fit-pack tokenized conversations into rows, then mask non-assistant targets. |
+| Oversized-conversation check | Skip and count conversations that cannot fit one row. |
 | `train()` | Load the previous model, update its weights, record losses, and save checkpoints. |
 | `evaluate()` | Call `scripts.chat_eval.run_chat_eval()` for the three required benchmarks. |
 | `mask_example()` | Save a concrete token-level example of assistant-only loss masking. |
@@ -110,7 +119,8 @@ These are editable starting settings, not settings selected after experiments:
 | Starting base checkpoint | Task 2 `depth2-vocab32768`, step 420 |
 | Model | Depth 2, width 128, 1 attention head, 32,768-token vocabulary |
 | Context length | 512 tokens, matching Task 2 |
-| Device batch size | 2 windows |
+| Device batch size | 2 rows |
+| New SFT packing buffer | 100 tokenized conversations |
 | Gradient accumulation | 4 microbatches per update |
 | Batch capacity | 4,096 token positions per update, including padding |
 | Horizon | 1,000 optimizer-step attempts per stage |
@@ -145,29 +155,33 @@ run name and an explicit step budget after discussing the first observations.
 ### Differences from the original training script
 
 The training loop follows `scripts/chat_sft.py`, with the stage selection and
-checkpoint paths made explicit. To keep this one-device version understandable:
+checkpoint paths made explicit. The current loader is closer to its SFT loader:
 
 - Stage 1 loads the specified Task 2 checkpoint. Stage 2 requires a completed
   **mid** run, so it cannot silently start from the base model again.
 - We use fixed update budgets and fresh optimizer moments for each stage.
   The original trainer can warm-start optimizer moments and stop by dataset pass.
-- We divide long conversations into consecutive windows instead of using the
-  original best-fit conversation packing. Windows overlap by one context token;
-  each next-token target is included once. Short final windows are padded.
-  A continuation window only sees its local preceding context, which is a
-  trade-off to discuss when interpreting results.
-- Windows containing no assistant targets are skipped. No answer is dropped just
-  because its conversation is longer than 512 tokens. Counters record long
-  conversations, skipped context-only windows, padding, and prepared windows.
+- As in nanochat SFT, we keep a buffer of 100 tokenized items, choose the
+  largest whole item that fits the remaining row capacity, and pad when none
+  fits. User, tool-output, and padding targets have loss mask zero.
+- Unlike the original packer, a conversation longer than the row capacity
+  (513 token IDs when the context length is 512) is counted and skipped before
+  entering the buffer. This avoids a buffer permanently filled with items that
+  cannot fit, at the cost of losing those long training examples.
+- Conversations with no assistant targets are also skipped. A full pass with
+  no usable conversation raises an error rather than looping forever. The run
+  record counts opened, skipped and packed conversations, padding, and rows.
 - Loss is normalized by the total number of supervised targets across all
   microbatches in an update. This avoids giving a heavily padded microbatch the
   same weight as one with many assistant targets.
 - Evaluation is an explicit separate command. There is no automatic benchmark
   sweep, validation-based stopping, or multi-GPU support in this small runner.
 
-The batching counters count conversations **opened** by the iterator, which can
-include a partly consumed final conversation. Windows and supervised-token
-counts provide the more precise measure of actual training work.
+The batching counters count conversation **encounters** by the iterator, including
+repeated entries if it wraps around the mixture. Skipped counters are encounters,
+not distinct dataset rows. Packed conversations and supervised-token counts
+provide the more precise measure of actual training work. The historical
+`mid-d2` and `sft-d2` counters describe the old windowed loader instead.
 
 ### Loss masking: what to look for
 
@@ -198,9 +212,9 @@ successfully before continuing. They use the existing depth-2, 32,768-token
 model. Stage 1 trains on **MMLU + GSM-8K**; Stage 2 trains on **SmolTalk**.
 The main commands below request **1,000 optimizer-step attempts per stage**.
 
-These instructions reproduce the recorded experiment. The existing `mid-d2` and
-`sft-d2` runs are already complete in this workspace. For a new experiment, use
-new run names consistently, as explained under **Running another experiment**.
+These instructions run the revised best-fit loader; they do **not** reproduce
+the recorded `mid-d2` and `sft-d2` windowed results. The commands below use
+new names so the old records and checkpoints cannot be overwritten.
 
 ### 1. Open a terminal and check the environment
 
@@ -211,11 +225,18 @@ folder (replace `/path/to/nanochat` with its actual location):
 cd /path/to/nanochat
 ```
 
-Use **Task 2's Python** explicitly in every command. You do not need to activate
-an environment, and the notebook's selected kernel does not affect these commands.
+Use your existing project environment explicitly in every command. On the Mac
+checkout use `.venv/bin/python`; on the lab machine, substitute its actual
+environment path (possibly `task2/.venv/bin/python`). For example, on the Mac:
 
 ```bash
-task2/.venv/bin/python - <<'PY'
+TASK3_PYTHON=.venv/bin/python
+```
+
+The notebook's selected kernel does not affect these terminal commands.
+
+```bash
+"$TASK3_PYTHON" - <<'PY'
 import sys
 import numpy
 import torch
@@ -229,9 +250,9 @@ if torch.cuda.is_available():
 PY
 ```
 
-The Python path should contain **`task2/.venv`**, and CUDA should print **`True`**
-for the GPU commands below. If it prints `False`, use the GPU computer/environment
-that worked for Task 2 before continuing.
+The Python path should name the environment you selected. CUDA should print
+**`True`** for GPU training. If it prints `False`, use the GPU computer and
+environment that worked for Task 2 before continuing.
 
 On a fresh clone, recreate the Task 2 Python environment using the instructions
 in [task2/README.md](../task2/README.md), then restore the tokenizer and base
@@ -255,29 +276,30 @@ This preview prints the input checkpoint, datasets, settings and output director
 It does not load model weights or start training:
 
 ```bash
-task2/.venv/bin/python -B task3/task3.py train --stage mid --name mid-d2 --steps 1000 --device cuda --dry-run
+"$TASK3_PYTHON" -B task3/task3.py train --stage mid --name mid-d2-bestfit --steps 1000 --device cuda --dry-run
 ```
 
 Save the concrete token-level example needed for the report's loss-masking question:
 
 ```bash
-task2/.venv/bin/python -B task3/task3.py mask
+"$TASK3_PYTHON" -B task3/task3.py mask
 ```
 
 Its output is `task3/results/loss_mask_example.csv`. This command only uses the
-tokenizer; it does not train a model. An example is already saved in this workspace;
-you can rerun this command to inspect it in the terminal.
+tokenizer; it does not train a model. An example is already saved; rerunning
+this command rewrites that CSV, so just open the existing file if you want to
+preserve the recorded artifact byte-for-byte.
 
 ### 3. Run a short GPU pilot
 
 Try 20 steps before committing to the main experiment:
 
 ```bash
-task2/.venv/bin/python -B task3/task3.py train --stage mid --name mid-pilot --steps 20 --device cuda
+"$TASK3_PYTHON" -B task3/task3.py train --stage mid --name mid-bestfit-pilot --steps 20 --device cuda
 ```
 
 A successful run ends with `Saved checkpoint and training records`, and
-`task3/results/mid-pilot/run.json` has `"status": "complete"`. The first update
+`task3/results/mid-bestfit-pilot/run.json` has `"status": "complete"`. The first update
 may take longer because PyTorch compiles the model. If a command raises an error,
 resolve it before proceeding to the next step.
 
@@ -286,10 +308,11 @@ from the Task 2 base model; it does not continue from the pilot.
 
 ### 4. Evaluate the base model
 
-Record the starting scores on **ARC-Easy, ARC-Challenge and GSM-8K**:
+The saved base-model scores on **ARC-Easy, ARC-Challenge and GSM-8K** can be
+reused if the evaluation protocol is unchanged. On a fresh workspace, run:
 
 ```bash
-task2/.venv/bin/python -B task3/task3.py evaluate --stage base --device cuda
+"$TASK3_PYTHON" -B task3/task3.py evaluate --stage base --device cuda
 ```
 
 This evaluates all three complete test splits. GSM-8K generates answers, so it
@@ -301,37 +324,37 @@ It prints the folder where it saved the benchmark evidence.
 Train on MMLU + GSM-8K:
 
 ```bash
-task2/.venv/bin/python -B task3/task3.py train --stage mid --name mid-d2 --steps 1000 --device cuda
+"$TASK3_PYTHON" -B task3/task3.py train --stage mid --name mid-d2-bestfit --steps 1000 --device cuda
 ```
 
 After it finishes successfully, evaluate its checkpoint:
 
 ```bash
-task2/.venv/bin/python -B task3/task3.py evaluate --stage mid --run mid-d2 --device cuda
+"$TASK3_PYTHON" -B task3/task3.py evaluate --stage mid --run mid-d2-bestfit --device cuda
 ```
 
 The final model is saved as
-`task3/artifacts/checkpoints/mid-d2/model_001000.pt`.
-Training settings and losses are in `task3/results/mid-d2/`.
+`task3/artifacts/checkpoints/mid-d2-bestfit/model_001000.pt`.
+Training settings and losses are in `task3/results/mid-d2-bestfit/`.
 
 ### 6. Train and evaluate Stage 2: SFT
 
-Load the completed **mid-d2** checkpoint and train only on SmolTalk:
+Load the completed **mid-d2-bestfit** checkpoint and train only on SmolTalk:
 
 ```bash
-task2/.venv/bin/python -B task3/task3.py train --stage sft --name sft-d2 --from-run mid-d2 --steps 1000 --device cuda
+"$TASK3_PYTHON" -B task3/task3.py train --stage sft --name sft-d2-bestfit --from-run mid-d2-bestfit --steps 1000 --device cuda
 ```
 
-Here, **`--from-run mid-d2`** selects the Stage 1 checkpoint. After training
+Here, **`--from-run mid-d2-bestfit`** selects the new Stage 1 checkpoint. After training
 finishes successfully, evaluate the SFT model:
 
 ```bash
-task2/.venv/bin/python -B task3/task3.py evaluate --stage sft --run sft-d2 --device cuda
+"$TASK3_PYTHON" -B task3/task3.py evaluate --stage sft --run sft-d2-bestfit --device cuda
 ```
 
 The final model is saved as
-`task3/artifacts/checkpoints/sft-d2/model_001000.pt`.
-Training settings and losses are in `task3/results/sft-d2/`.
+`task3/artifacts/checkpoints/sft-d2-bestfit/model_001000.pt`.
+Training settings and losses are in `task3/results/sft-d2-bestfit/`.
 
 ### 7. Open the recorded results
 
@@ -355,7 +378,7 @@ comparison. Use the same GPU environment for all three evaluations.
 To check evaluation with at most 10 problems per task before the full runs:
 
 ```bash
-task2/.venv/bin/python -B task3/task3.py evaluate --stage base --max-problems 10 --device cuda
+"$TASK3_PYTHON" -B task3/task3.py evaluate --stage base --max-problems 10 --device cuda
 ```
 
 This is a **subset check** and is saved in a separate table. It does not replace
@@ -413,7 +436,15 @@ Completed training and benchmark records are included in this folder.
 
 ## Code verification
 
-The initial implementation passed ten non-training checks; the historical record
+The current best-fit loader has data-free checks for packing two short
+conversations into one row, skipping and counting oversized conversations,
+and rejecting mixtures with no usable supervised targets:
+
+```bash
+"$TASK3_PYTHON" -m unittest discover -s task3/tests -v
+```
+
+The initial windowed implementation passed ten non-training checks; the historical record
 and checked source hash are in [results/code_checks.json](results/code_checks.json).
 They covered stage selection, checkpoint routing, long-conversation windows,
 loss masks, schedule boundaries, settings and dry-run behavior. That record

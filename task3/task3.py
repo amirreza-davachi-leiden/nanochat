@@ -9,7 +9,6 @@ import csv
 from dataclasses import asdict
 from datetime import datetime, timezone
 import hashlib
-import itertools
 import json
 import os
 from pathlib import Path
@@ -127,36 +126,68 @@ def data_files(specs):
     return records
 
 
-def training_batches(dataset, tokenizer, length, batch_size, stats):
-    """Turn conversations into fixed-size batches with assistant-only targets."""
+def training_batches(dataset, tokenizer, length, batch_size, stats, buffer_size=100):
+    """Pack whole conversations like nanochat SFT, skipping oversized ones.
+
+    The 100-item best-fit buffer mirrors scripts/chat_sft.py. The extra skip
+    prevents conversations longer than a row from permanently clogging it.
+    """
     import torch
     if not len(dataset):
         raise ValueError('The training mixture is empty.')
-    inputs, targets = [], []
-    for index in itertools.cycle(range(len(dataset))):
-        ids, mask = tokenizer.render_conversation(dataset[index], max_tokens=None)
-        stats['conversations_opened'] += 1
-        stats['long_conversations'] += int(len(ids) > length + 1)
-        # Adjacent windows overlap by one context token, so no target is duplicated.
-        # This keeps long conversations instead of silently losing their answers.
-        for start in range(0, len(ids) - 1, length):
-            window = ids[start:start + length + 1]
-            target_mask = mask[start + 1:start + len(window)]
-            if not any(target_mask):
-                stats['context_only_windows_skipped'] += 1
+    if buffer_size < 1:
+        raise ValueError('buffer_size must be positive.')
+    capacity = length + 1
+    bos_token = tokenizer.get_bos_token_id()
+    buffer = []
+    cursor = 0
+
+    def next_eligible_conversation():
+        nonlocal cursor
+        # A full pass without an eligible conversation would otherwise loop forever.
+        for _ in range(len(dataset)):
+            ids, mask = tokenizer.render_conversation(dataset[cursor], max_tokens=None)
+            stats['conversations_opened'] += 1
+            cursor = (cursor + 1) % len(dataset)
+            if len(ids) > capacity:
+                stats['oversized_skipped'] += 1
                 continue
-            x = window[:-1]
-            y = [token if keep else -1 for token, keep in zip(window[1:], target_mask)]
-            padding = length - len(x)
-            inputs.append(x + [tokenizer.get_bos_token_id()] * padding)
-            targets.append(y + [-1] * padding)
-            stats['windows_prepared'] += 1
-            stats['padding_positions'] += padding
-            if len(inputs) == batch_size:
-                yield torch.tensor(inputs, dtype=torch.int32), torch.tensor(targets, dtype=torch.int64)
-                inputs, targets = [], []
-        if index == len(dataset) - 1 and not stats['windows_prepared']:
-            raise ValueError('No assistant targets were found in this dataset.')
+            if not any(mask[1:]):
+                stats['unsupervised_skipped'] += 1
+                continue
+            return ids, mask
+        raise ValueError('No conversation with assistant targets fits in one training row.')
+
+    def refill_buffer():
+        while len(buffer) < buffer_size:
+            buffer.append(next_eligible_conversation())
+
+    while True:
+        inputs, targets = [], []
+        for _ in range(batch_size):
+            row, mask_row = [], []
+            while len(row) < capacity:
+                refill_buffer()
+                remaining = capacity - len(row)
+                best_idx, best_len = -1, 0
+                for idx, (conversation_ids, _) in enumerate(buffer):
+                    if best_len < len(conversation_ids) <= remaining:
+                        best_idx, best_len = idx, len(conversation_ids)
+                if best_idx < 0:
+                    row.extend([bos_token] * remaining)
+                    mask_row.extend([0] * remaining)
+                    stats['padding_positions'] += remaining
+                    break
+                conversation_ids, conversation_mask = buffer.pop(best_idx)
+                row.extend(conversation_ids)
+                mask_row.extend(conversation_mask)
+                stats['conversations_packed'] += 1
+            x = row[:-1]
+            y = [token if keep else -1 for token, keep in zip(row[1:], mask_row[1:])]
+            inputs.append(x)
+            targets.append(y)
+            stats['rows_prepared'] += 1
+        yield torch.tensor(inputs, dtype=torch.int32), torch.tensor(targets, dtype=torch.int64)
 
 
 def lr_multiplier(step, steps, settings):
@@ -185,6 +216,7 @@ def train(args, config):
     results = ROOT / 'results' / name
     plan = dict(stage=args.stage, source_stage=parent_stage, source_directory=str(source),
                 source_step=source_step, output_directory=str(output), settings=settings,
+                batching_method='nanochat_bestfit_skip_oversized',
                 datasets=['MMLU', 'GSM8K'] if args.stage == 'mid' else ['SmolTalk'])
     if args.dry_run:
         print(json.dumps(plan, indent=2))
@@ -208,9 +240,10 @@ def train(args, config):
     if settings['sequence_length'] != model.config.sequence_len:
         raise ValueError('Keep sequence_length equal to the source checkpoint context length.')
     dataset, counts = make_dataset(args.stage, settings)
-    stats = dict(conversations_opened=0, long_conversations=0, context_only_windows_skipped=0,
-                 windows_prepared=0, padding_positions=0)
-    batches = training_batches(dataset, tokenizer, settings['sequence_length'], settings['batch_size'], stats)
+    stats = dict(conversations_opened=0, oversized_skipped=0, unsupervised_skipped=0,
+                 conversations_packed=0, rows_prepared=0, padding_positions=0)
+    batches = training_batches(dataset, tokenizer, settings['sequence_length'], settings['batch_size'],
+                               stats, buffer_size=settings['sft_buffer_size'])
     # Full fine-tuning: nanochat's optimizer includes every model parameter.
     # Start fresh optimizer moments at each stage; model weights continue from the previous stage.
     optimizer = model.setup_optimizer(embedding_lr=settings['embedding_lr'],
@@ -395,7 +428,7 @@ def mask_example(args, config):
 def validate_config(config):
     """Reject settings that would produce empty batches or an invalid schedule."""
     settings = config['training']
-    for key in ('steps', 'sequence_length', 'batch_size', 'gradient_accumulation',
+    for key in ('steps', 'sequence_length', 'batch_size', 'sft_buffer_size', 'gradient_accumulation',
                 'mmlu_repetitions', 'gsm8k_repetitions', 'log_every', 'checkpoint_every'):
         if not isinstance(settings[key], int) or settings[key] < 1:
             raise ValueError(f'{key} must be a positive integer.')

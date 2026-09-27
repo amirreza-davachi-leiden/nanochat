@@ -6,6 +6,7 @@
     "steps": 1000,
     "sequence_length": 512,
     "batch_size": 2,
+    "sft_buffer_size": 100,
     "gradient_accumulation": 4,
     "mmlu_repetitions": 3,
     "gsm8k_repetitions": 4,
