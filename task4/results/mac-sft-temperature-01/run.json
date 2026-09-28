@@ -1,0 +1,56 @@
+{
+  "kind": "temperature_sweep",
+  "name": "mac-sft-temperature-01",
+  "status": "complete",
+  "started_utc": "2026-09-28T14:06:08.811220+00:00",
+  "model": {
+    "stage": "sft",
+    "step": 1000,
+    "checkpoint_dir": "/Users/amir/Documents/University/Semester 3/Student/Agentic/Assignments/A1/nanochat/task1/data/task2_notebook_test/task3_mac_finetune/notebook-sft-d2-20260927T235501Z-f7cfea/checkpoints",
+    "model_file": "/Users/amir/Documents/University/Semester 3/Student/Agentic/Assignments/A1/nanochat/task1/data/task2_notebook_test/task3_mac_finetune/notebook-sft-d2-20260927T235501Z-f7cfea/checkpoints/model_001000.pt",
+    "model_sha256": "a3dcaac0f2b3e6a06bbad8361a9bddec2818f6abce7b4460d1569fe68577069a",
+    "metadata_file": "/Users/amir/Documents/University/Semester 3/Student/Agentic/Assignments/A1/nanochat/task1/data/task2_notebook_test/task3_mac_finetune/notebook-sft-d2-20260927T235501Z-f7cfea/checkpoints/meta_001000.json",
+    "tokenizer_dir": "/Users/amir/Documents/University/Semester 3/Student/Agentic/Assignments/A1/nanochat/task1/data/task2_notebook_test/task2_mac_pretrain/artifacts/tokenizer",
+    "tokenizer_sha256": "1bd1d067dce90ffb51e3064f233d931d5b9941ea0bd8fc72ef40353a48209eec",
+    "model_config": {
+      "sequence_len": 512,
+      "vocab_size": 32768,
+      "n_layer": 2,
+      "n_head": 1,
+      "n_kv_head": 1,
+      "n_embd": 128,
+      "window_pattern": "L"
+    },
+    "device": "mps",
+    "dtype": "float32",
+    "trainable_parameters": 12976170,
+    "python_version": "3.11.16",
+    "torch_version": "2.9.1",
+    "nanochat_commit": "26ff89b86cf2392cc78af679b322caeee0883332"
+  },
+  "settings": {
+    "prompts_file": "/Users/amir/Documents/University/Semester 3/Student/Agentic/Assignments/A1/nanochat/task4/prompts.json",
+    "prompts_sha256": "2d59415ce9ed10656097f8a9a451efc55eb7f7f695ccb9e206b46841e1b8b433",
+    "prompt_ids": [
+      "arithmetic",
+      "factual",
+      "explanation",
+      "instruction",
+      "creative"
+    ],
+    "temperatures": [
+      0.1,
+      0.7,
+      1.5
+    ],
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "top_k": 50,
+    "max_new_tokens": 96
+  },
+  "completed_generations": 45,
+  "finished_utc": "2026-09-28T14:06:20.990120+00:00"
+}

@@ -1,0 +1,24 @@
+{
+  "prompts": [
+    {
+      "id": "arithmetic",
+      "text": "What is 12 times 7? Give a short explanation and the final answer."
+    },
+    {
+      "id": "factual",
+      "text": "Which planet is known as the Red Planet? Answer in one sentence."
+    },
+    {
+      "id": "explanation",
+      "text": "Explain what a variable is in programming to a beginner in two sentences."
+    },
+    {
+      "id": "instruction",
+      "text": "Give three practical tips for organizing a study session."
+    },
+    {
+      "id": "creative",
+      "text": "Continue this story in two sentences: The student opened an old notebook and found a map."
+    }
+  ]
+}

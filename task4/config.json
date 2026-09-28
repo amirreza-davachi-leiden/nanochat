@@ -1,0 +1,43 @@
+{
+  "model": {
+    "checkpoint_dir": "task1/data/task2_notebook_test/task3_mac_finetune/notebook-sft-d2-20260927T235501Z-f7cfea/checkpoints",
+    "step": 1000,
+    "stage": "sft",
+    "tokenizer_dir": "task1/data/task2_notebook_test/task2_mac_pretrain/artifacts/tokenizer"
+  },
+  "chat_models": {
+    "base": {
+      "checkpoint_dir": "task1/data/task2_notebook_test/task2_mac_pretrain/artifacts/base_checkpoints/notebook-depth2-full-20260926-213042-f7161a",
+      "step": 420,
+      "stage": "base",
+      "tokenizer_dir": "task1/data/task2_notebook_test/task2_mac_pretrain/artifacts/tokenizer"
+    },
+    "mid": {
+      "checkpoint_dir": "task1/data/task2_notebook_test/task3_mac_finetune/notebook-mid-d2-20260927T223221Z-aaf76c/checkpoints",
+      "step": 1000,
+      "stage": "mid",
+      "tokenizer_dir": "task1/data/task2_notebook_test/task2_mac_pretrain/artifacts/tokenizer"
+    },
+    "sft": {
+      "checkpoint_dir": "task1/data/task2_notebook_test/task3_mac_finetune/notebook-sft-d2-20260927T235501Z-f7cfea/checkpoints",
+      "step": 1000,
+      "stage": "sft",
+      "tokenizer_dir": "task1/data/task2_notebook_test/task2_mac_pretrain/artifacts/tokenizer"
+    }
+  },
+  "generation": {
+    "device": "auto",
+    "dtype": "auto",
+    "top_k": 50,
+    "max_new_tokens": 96,
+    "temperatures": [0.1, 0.7, 1.5],
+    "seeds": [42, 43, 44]
+  },
+  "benchmark": {
+    "batch_size": 1,
+    "num_samples": 1,
+    "max_new_tokens": 512,
+    "temperature": 0.0,
+    "top_k": 50
+  }
+}
